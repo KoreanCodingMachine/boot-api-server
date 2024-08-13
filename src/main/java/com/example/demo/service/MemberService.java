@@ -5,4 +5,5 @@ import com.example.demo.domain.Member;
 
 public interface MemberService {
     void insert(Member member);
+    void delete(Member member);
 }
