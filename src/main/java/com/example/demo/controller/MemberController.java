@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Member;
+import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.service.MemberService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,7 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @GetMapping("/api/member")
+    @GetMapping("/api/members")
     public Member getMember() {
         // object 리턴시 자동으로 json형태로 형변환
 
@@ -42,11 +44,13 @@ public class MemberController {
     }
 
 
-    @PostMapping("/api/member")
-    public Member postMember() {
+    @PostMapping("/api/members")
+    public Member postMember(@RequestBody @Valid MemberRequestDto memberRequestDto) {
         Member member = new Member();
-        member.setName("kjh");
-        member.setPassword("1234");
+        member.setName(memberRequestDto.getName());
+        member.setPassword(memberRequestDto.getPassword());
+        member.setAge(memberRequestDto.getAge());
+        member.setNickname(memberRequestDto.getNickname());
 
         memberService.insert(member);
 
