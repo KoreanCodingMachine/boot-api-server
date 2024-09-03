@@ -21,7 +21,6 @@ public class ValidationExceptionHandler {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        System.out.println(exception);
 
         return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
     }

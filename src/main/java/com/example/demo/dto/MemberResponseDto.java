@@ -6,11 +6,11 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class MemberResponseDTO {
+public class MemberResponseDto {
     private Long id;
     private String name;
 
-    public static MemberResponseDTO of (Member member) {
+    public static MemberResponseDto of (Member member) {
 //        MemberResponseDTO build = builder()
 //                .id(member.getId())
 //                .name(member.getName())
