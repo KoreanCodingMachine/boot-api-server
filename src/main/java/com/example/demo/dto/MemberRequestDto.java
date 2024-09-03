@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.annotation.MapleNickname;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
@@ -18,21 +19,22 @@ public class MemberRequestDto {
     @NotBlank
     private String password;
 
+    @MapleNickname
     private String nickname;
 
-    @AssertTrue(message = "nickname에 부적절한 단어가 포함되어 있습니다.")
-    public boolean isValidName() {
-        // 부적절한 단어 체크 해서 있으면 false 로 반환할거야
-        // fool, ac
-
-        List<String> invalidWords = List.of("fool", "ac");
-
-        for (String word : invalidWords) {
-            if (StringUtils.containsIgnoreCase(nickname, word)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
+//    @AssertTrue(message = "nickname에 부적절한 단어가 포함되어 있습니다.")
+//    public boolean isValidName() {
+//        // 부적절한 단어 체크 해서 있으면 false 로 반환할거야
+//        // fool, ac
+//
+//        List<String> invalidWords = List.of("fool", "ac");
+//
+//        for (String word : invalidWords) {
+//            if (StringUtils.containsIgnoreCase(nickname, word)) {
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
 }
