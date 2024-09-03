@@ -7,7 +7,6 @@ import com.example.demo.service.MemberService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +21,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void delete(Long id) {
+        if (!memberRepository.existsById(id)) {
+           throw new EntityNotFoundException("no entity");
+        }
         memberRepository.deleteById(id);
     }
 
@@ -39,6 +41,7 @@ public class MemberServiceImpl implements MemberService {
                .map(member -> MemberResponseDto.of(member))
                .orElseThrow(() -> new EntityNotFoundException("member not found"));
     }
+
     @Override
     public MemberResponseDto updateMember(Long id, String name) {
         memberRepository.findById(id).ifPresentOrElse(member -> {

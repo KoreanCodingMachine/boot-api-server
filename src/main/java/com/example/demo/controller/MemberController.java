@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.domain.Member;
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
+import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
