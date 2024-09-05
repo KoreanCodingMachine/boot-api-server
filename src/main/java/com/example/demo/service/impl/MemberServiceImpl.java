@@ -7,6 +7,8 @@ import com.example.demo.service.MemberService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,28 +31,25 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<MemberResponseDto> getAll() {
-        return memberRepository.findAll()
-                .stream()
-                .map(member -> MemberResponseDto.of(member))
-                .collect(Collectors.toList());
+        return memberRepository.findAll().stream()
+                .map(MemberResponseDto::of)
+                .toList();
     }
 
     @Override
     public MemberResponseDto getById(Long id) {
-       return memberRepository.findById(id)
-               .map(member -> MemberResponseDto.of(member))
-               .orElseThrow(() -> new EntityNotFoundException("member not found"));
+        Member memberFound = memberRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("no entity"));
+        return MemberResponseDto.of(memberFound);
     }
 
     @Override
+    @Transactional // setAutoCommit(false) [서비스 로직] commit (flush) 혹은 rollback
     public MemberResponseDto updateMember(Long id, String name) {
-        memberRepository.findById(id).ifPresentOrElse(member -> {
-            member.setName(name);  // 멤버의 이름을 업데이트
-            memberRepository.save(member);  // 변경된 멤버를 저장
-        }, () -> {
-            throw new EntityNotFoundException("Member not found with id: " + id);
-        });
-        return null;
+        Member memberFound = memberRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("no entity"));
+        memberFound.setName(name);
+        return MemberResponseDto.of(memberFound);
     }
 
 
