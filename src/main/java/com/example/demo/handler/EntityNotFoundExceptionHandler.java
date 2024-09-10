@@ -1,5 +1,7 @@
 package com.example.demo.handler;
 
+import com.example.demo.dto.ApiResponse;
+import com.example.demo.dto.MemberResponseCode;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +17,8 @@ import java.util.Map;
 @RestControllerAdvice
 public class EntityNotFoundExceptionHandler {
     @ExceptionHandler (value = EntityNotFoundException.class)
-    public ResponseEntity handleException(EntityNotFoundException ex, WebRequest request) {
-        Map<String, String> errors = new HashMap<>();
-        errors.put("error", ex.getMessage());
-        return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
+    public ApiResponse handleException(EntityNotFoundException ex, WebRequest request) {
+        return ApiResponse.of(MemberResponseCode.MEMBER_NOT_FOUND);
     }
 
 }

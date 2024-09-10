@@ -32,9 +32,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void delete(Long id) {
-        if (!memberRepository.existsById(id)) {
-           throw new EntityNotFoundException("no entity");
-        }
+        Member memberFound = memberRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("no entity"));
         memberRepository.deleteById(id);
     }
 
@@ -54,11 +53,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional // setAutoCommit(false) [서비스 로직] commit (flush) 혹은 rollback
-    public MemberResponseDto updateMember(Long id, String name) {
+    public void updateMember(Long id, String name) {
         Member memberFound = memberRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("no entity"));
         memberFound.setName(name);
-        return MemberResponseDto.of(memberFound);
     }
 
 }

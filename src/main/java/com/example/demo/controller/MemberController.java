@@ -28,9 +28,9 @@ public class MemberController {
     }
 
     @DeleteMapping("/api/members/{id}")
-    public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
+    public ApiResponse deleteMember(@PathVariable Long id) {
         memberService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ApiResponse.of(MemberResponseCode.MEMBER_DELETED_OK);
     }
 
     @GetMapping("/api/members")
@@ -44,9 +44,9 @@ public class MemberController {
     }
 
     @PutMapping("/api/members/{id}")
-    public ResponseEntity<MemberResponseDto> updateMember(@RequestBody @Valid MemberRequestDto memberRequestDto, @PathVariable Long id) {
-        MemberResponseDto updatedMember = memberService.updateMember(id, memberRequestDto.getName());
-        return ResponseEntity.ok(updatedMember);
+    public ApiResponse updateMember(@RequestBody @Valid MemberRequestDto memberRequestDto, @PathVariable Long id) {
+        memberService.updateMember(id, memberRequestDto.getName());
+        return ApiResponse.of(MemberResponseCode.MEMBER_UPDATED_OK);
     }
 
 

@@ -12,5 +12,5 @@ public interface MemberService {
     void delete(Long id);                      // 멤버 삭제
     List<MemberResponseDto> getAll();          // 멤버 전체 조회
     MemberResponseDto getById(Long id);        // 멤버 단건 조회
-    MemberResponseDto updateMember(Long id, String name);   // 멤버 수정
+    void updateMember(Long id, String name);   // 멤버 수정
 }
