@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Member;
+import com.example.demo.dto.ApiResponse;
 import com.example.demo.dto.MemberRequestDto;
+import com.example.demo.dto.MemberResponseCode;
 import com.example.demo.dto.MemberResponseDto;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
@@ -18,16 +20,11 @@ public class MemberController {
     private MemberService memberService;
 
     @PostMapping("/api/members")
-    public Member postMember(@RequestBody @Valid MemberRequestDto memberRequestDto) {
-        Member member = new Member();
-        member.setName(memberRequestDto.getName());
-        member.setPassword(memberRequestDto.getPassword());
-        member.setAge(memberRequestDto.getAge());
-        member.setNickname(memberRequestDto.getNickname());
+    public ApiResponse postMember(@RequestBody @Valid MemberRequestDto memberRequestDto) {
 
-        memberService.insert(member);
+        memberService.insert(memberRequestDto);
 
-        return member;
+        return ApiResponse.of(MemberResponseCode.MEMBER_CREATED_OK);
     }
 
     @DeleteMapping("/api/members/{id}")

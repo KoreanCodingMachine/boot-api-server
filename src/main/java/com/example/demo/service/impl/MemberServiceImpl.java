@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.domain.Member;
+import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
@@ -10,18 +11,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 public class MemberServiceImpl implements MemberService {
     @Autowired
     private MemberRepository memberRepository;
     @Override
-    public void insert(Member member) {
+    @Transactional
+    public void insert(MemberRequestDto memberRequestDto) {
+        Member member = new Member();
+        member.setName(memberRequestDto.getName());
+        member.setPassword(memberRequestDto.getPassword());
+        member.setAge(memberRequestDto.getAge());
+        member.setNickname(memberRequestDto.getNickname());
+
         memberRepository.save(member);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         if (!memberRepository.existsById(id)) {
            throw new EntityNotFoundException("no entity");
@@ -51,7 +60,5 @@ public class MemberServiceImpl implements MemberService {
         memberFound.setName(name);
         return MemberResponseDto.of(memberFound);
     }
-
-
 
 }
