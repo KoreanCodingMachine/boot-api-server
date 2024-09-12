@@ -9,7 +9,7 @@ import lombok.Getter;
 public class MemberResponseDto {
     private Long id;
     private String name;
-
+    private String teamName;
     public static MemberResponseDto of (Member member) {
 //        MemberResponseDTO build = builder()
 //                .id(member.getId())
@@ -21,6 +21,7 @@ public class MemberResponseDto {
         return builder()
                 .id(member.getId())
                 .name(member.getName())
+                .teamName(member.getTeam().getName())
                 .build();
     }
 }
