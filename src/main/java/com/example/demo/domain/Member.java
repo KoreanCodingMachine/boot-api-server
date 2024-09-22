@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -20,6 +23,14 @@ public class Member {
     @ManyToOne
     @JoinColumn (name = "team_id")
     private Team team;
+
+    @ManyToMany
+    @JoinTable(
+            name = "member_brand",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "brand_id")
+    )
+    private List<Brand> brands = new ArrayList<>();
 
 }
 
