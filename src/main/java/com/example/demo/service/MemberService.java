@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.domain.Member;
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
 

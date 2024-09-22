@@ -39,7 +39,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<MemberResponseDto> getAll() {
-        return memberRepository.findAll().stream()
+        return memberRepository.findAllMembersWithTeam().stream()
                 .map(MemberResponseDto::of)
                 .toList();
     }
