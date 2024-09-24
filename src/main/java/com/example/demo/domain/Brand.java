@@ -13,7 +13,7 @@ public class Brand {
     private Long id;
     private String name;
 
-    @ManyToMany(mappedBy = "brands")
-    private List<Member> members = new ArrayList<>();
+    @OneToMany(mappedBy = "brand")
+    private List<MemberBrand> memberBrands = new ArrayList<>();
 
 }

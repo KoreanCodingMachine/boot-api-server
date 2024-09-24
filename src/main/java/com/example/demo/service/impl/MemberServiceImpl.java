@@ -1,11 +1,17 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.domain.Brand;
 import com.example.demo.domain.Member;
+import com.example.demo.domain.MemberBrand;
+import com.example.demo.dto.BrandRequestDto;
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
+import com.example.demo.repository.BrandRepository;
+import com.example.demo.repository.MemberBrandRepository;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.service.MemberService;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,9 +20,11 @@ import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-    @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
+    private final BrandRepository brandRepository;
+    private final MemberBrandRepository memberBrandRepository;
     @Override
     @Transactional
     public void insert(MemberRequestDto memberRequestDto) {
@@ -57,6 +65,23 @@ public class MemberServiceImpl implements MemberService {
         Member memberFound = memberRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("no entity"));
         memberFound.setName(name);
+    }
+
+    @Override
+    @Transactional
+    public void addBrand(BrandRequestDto brandRequestDto) {
+        Member member = memberRepository.findById(brandRequestDto.getMemberId())
+                .orElseThrow(() -> new EntityNotFoundException("no entity"));
+
+        Brand brand = brandRepository.findById(brandRequestDto.getBrandId())
+                .orElseThrow(() -> new EntityNotFoundException("no entity"));
+
+        MemberBrand memberBrand = new MemberBrand();
+        memberBrand.setMember(member);
+        memberBrand.setBrand(brand);
+        memberBrand.setCount(brandRequestDto.getCount());
+
+        memberBrandRepository.save(memberBrand);
     }
 
 }

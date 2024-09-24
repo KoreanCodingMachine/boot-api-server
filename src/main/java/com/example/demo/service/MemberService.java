@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.BrandRequestDto;
 import com.example.demo.dto.MemberRequestDto;
 import com.example.demo.dto.MemberResponseDto;
 
@@ -12,4 +13,5 @@ public interface MemberService {
     List<MemberResponseDto> getAll();          // 멤버 전체 조회
     MemberResponseDto getById(Long id);        // 멤버 단건 조회
     void updateMember(Long id, String name);   // 멤버 수정
+    void addBrand(BrandRequestDto brandRequestDto);
 }

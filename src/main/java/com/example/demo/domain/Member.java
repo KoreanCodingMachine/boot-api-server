@@ -24,13 +24,7 @@ public class Member {
     @JoinColumn (name = "team_id")
     private Team team;
 
-    @ManyToMany
-    @JoinTable(
-            name = "member_brand",
-            joinColumns = @JoinColumn(name = "member_id"),
-            inverseJoinColumns = @JoinColumn(name = "brand_id")
-    )
-    private List<Brand> brands = new ArrayList<>();
-
+    @OneToMany(mappedBy = "member")
+    private List<MemberBrand> memberBrands = new ArrayList<>();
 }
 
